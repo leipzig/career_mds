@@ -22,15 +22,17 @@ Certain career tracks form clusters of related professions.
 ```{r matrixsetup, message=FALSE}
 tb<-read.table("MOBILITY.txt")
 as.matrix(tb[,-1])->mob_mat
-diag(mob_mat)<-0
 pronames<-c("pro_se","pro_sal","mgr","sales_oth","props","clerks","sales_retail","crafts_mfr","crafts_oth","crafts_cnstr","srvc","oper_oth","oper_mfr","labor_mfr","labor_oth","farmers","farm_labor")
 dimnames(mob_mat)<-list(pronames,pronames)
+knitr::kable(mob_mat)
+
 ```
 
 ## Using dist and isoMDS
-This procedure attempts to force asymmterical distances into symmetrical ones. We will treat these are non-metric distances.
+This procedure attempts to force asymmterical distances into symmetrical ones. We will treat these as non-metric distances.
 
-```{r discmd}
+```{r discmd, message=FALSE}
+diag(mob_mat)<-0
 d <- dist(1-sqrt(mob_mat))
 #fit <- cmdscale(d,eig=TRUE, k=2)
 fit <- isoMDS(d, k=2)
@@ -42,9 +44,14 @@ ggplot(points,aes(V1,V2,label=profession))+geom_point()+geom_text(aes(x= V1+2, y
 ## Using driftVectors
 The driftVectors package attempts to create a symmetrical profile compatible with an MDS plot while storing vectors that relate asymmetry.
 
-```{r drift}
-mob_norm<-apply(mob_mat,1,function(x){x/sum(x)})
+```{r drift, message=FALSE}
 mob_scale<-scale(mob_mat)-min(scale(mob_mat))
-plot(driftVectors(mob_scale,type="ordinal"),xlim = c(-1,1), ylim= c(-1,1))
+mob_scale_dist<-2.5-sqrt(mob_scale)
+plot(driftVectors(mob_scale_dist,type="ordinal"),xlim =c(-1,1), ylim=c(-1,1), col.drift = "blue")
 ```
 
+## Conclusions
+
+* The labor professions are more closely tied to each other than their respective economic units
+
+* Self-employment and farming are destination professions
