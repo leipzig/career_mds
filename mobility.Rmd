@@ -47,8 +47,8 @@ The driftVectors package attempts to create a symmetrical profile compatible wit
 ```{r drift, message=FALSE}
 mob_scale<-scale(mob_mat)-min(scale(mob_mat))
 mob_scale_dist<-2.5-sqrt(mob_scale)
-driftVectors(mob_scale_dist,type="ordinal")
-plot(driftVectors(mob_scale_dist,type="ordinal"),xlim =c(-1,1), ylim=c(-1,1), col.drift = "blue")
+driftVectors(mob_scale_dist,type="ratio")
+plot(driftVectors(mob_scale_dist,type="ratio"),xlim =c(-1,1), ylim=c(-1,1), col.drift = "blue")
 ```
 
 ## Conclusions
