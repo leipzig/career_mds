@@ -495,7 +495,6 @@ knitr::kable(mob_mat)</code></pre>
 <p>This procedure attempts to force asymmterical distances into symmetrical ones. We will treat these as non-metric distances.</p>
 <pre class="r"><code>diag(mob_mat)&lt;-0
 d &lt;- dist(1-sqrt(mob_mat))
-#fit &lt;- cmdscale(d,eig=TRUE, k=2)
 fit &lt;- isoMDS(d, k=2)</code></pre>
 <pre><code>## initial  value 17.379616 
 ## iter   5 value 11.644926

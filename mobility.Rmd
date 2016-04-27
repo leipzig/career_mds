@@ -34,7 +34,6 @@ This procedure attempts to force asymmterical distances into symmetrical ones. W
 ```{r discmd, message=FALSE}
 diag(mob_mat)<-0
 d <- dist(1-sqrt(mob_mat))
-#fit <- cmdscale(d,eig=TRUE, k=2)
 fit <- isoMDS(d, k=2)
 points<-as.data.frame(fit$points)
 points$profession<-row.names(points)
